@@ -1,0 +1,8 @@
+{
+  "version": "1.2.0",
+  "dll_sha256": "5a1657764765c44417251798a57624ddc89c85552f31147151effdab275c7961",
+  "csv_entries_per_language": 68,
+  "tests": "passed",
+  "bridge_unchanged": true,
+  "in_game_tested": false
+}

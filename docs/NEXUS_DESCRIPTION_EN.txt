@@ -1,0 +1,26 @@
+HairPositioner UI
+
+Adjust player hair, beard, supported extra head parts, and equipped wigs/gear without opening RaceMenu. Requires HairPositioner 2.5, SKSE Menu Framework, RaceMenu/NiOverride, and SKSE64/Address Library matching your game version.
+
+Controls
+F3: open/close the editor (rebindable).
+Drag or mouse wheel over a value: adjust it.
+Ctrl+click: type an exact value.
+Fine/Normal/Coarse: choose adjustment precision.
+Undo / Restore session start / Reset: revert changes for the selected target.
+You can also open the editor through Mod Control Panel > HairPositioner.
+
+Install below the original HairPositioner in MO2. Keep the original enabled. There is no ESP. Save the game to keep adjustments; undo history lasts only for the current editing session.
+
+English is the default. Set [General] Language=korean in HairPositionerUI.ini for Korean, then restart the game. UTF-8 CSV files allow other languages to be added without rebuilding the DLL. Non-Latin text requires a suitable SKSE Menu Framework font configuration; this mod does not install fonts.
+
+1.2.0 is a test release: automated checks passed; gameplay validation is pending. SE/AE build targeting does not establish 1.6.1170 runtime compatibility. VR is not supported.
+
+Credits
+HairPositioner: Iwillbewarlock — https://github.com/Iwillbewarlock/HairPositioner
+SKSE Menu Framework/API: QTR-Modding — https://github.com/QTR-Modding/SKSE-Menu-Framework-3-API
+CommonLibSSE-NG: alandtse and contributors — https://github.com/alandtse/CommonLibVR
+SKSE and RaceMenu/NiOverride: required separately.
+
+Source and license: https://github.com/gamingforfun625-alt/HairPostionerUI
+GPL-3.0-or-later; third-party notices included.

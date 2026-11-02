@@ -1,0 +1,10 @@
+build/
+.xmake/
+.vs/
+*.user
+*.log
+*.pdb
+*.obj
+*.zip
+.DS_Store
+dist/
