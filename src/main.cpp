@@ -5,43 +5,13 @@
 #include <map>
 #include "EditHistory.h"
 #include "Language.h"
+#include "EditorState.h"
 namespace ImGui = ImGuiMCP;
 
 namespace HPUI
 {
-    using Clock = std::chrono::steady_clock;
     using Localization::L;
     constexpr char Script[] = "HPUIBridge";
-    constexpr std::size_t Rows = 11;
-    struct Target {
-        std::int32_t part = 0;
-        std::int32_t item = 0;
-        std::string name = L(0);
-        bool Same(const Target& other) const { return part == other.part && item == other.item; }
-    };
-    struct State {
-        std::array<float, 15> snapshot{};
-        std::vector<Target> targets;
-        Target selected;
-        bool catalogRefresh = true;
-        bool catalogBusy = false;
-        Clock::time_point lastCatalog{};
-        std::array<std::optional<float>, Rows> queued{};
-        std::optional<std::pair<int, float>> activeEdit;
-        bool valid = false;
-        bool busy = false;
-        bool resetQueued = false;
-        bool refresh = true;
-        bool beginSession = true;
-        std::map<std::pair<std::int32_t, std::int32_t>, EditHistory> histories;
-        struct Restore { EditValues desired; EditValues before; bool undo; };
-        std::optional<Restore> restoreQueued;
-        std::optional<Restore> restoreActive;
-        std::uint64_t generation = 0;
-        std::string error;
-        Clock::time_point started{};
-        Clock::time_point lastReply{};
-    };
     State state;
     std::mutex stateMutex;
     SKSEMenuFramework::Model::WindowInterface* window = nullptr;
@@ -69,10 +39,6 @@ namespace HPUI
         return result;
     }
     double Now() { return std::chrono::duration<double>(Clock::now().time_since_epoch()).count(); }
-    bool Pending(const State& source) {
-        return source.busy || source.resetQueued || source.restoreQueued || source.restoreActive ||
-            std::any_of(source.queued.begin(), source.queued.end(), [](const auto& v) { return v.has_value(); });
-    }
     void QueueRestore(const Target& expected, bool undo) {
         std::scoped_lock lock(stateMutex);
         if (Pending(state) || state.beginSession || !state.valid || !state.selected.Same(expected)) { return; }
@@ -158,7 +124,7 @@ namespace HPUI
 
     class Reply final : public RE::BSScript::IStackCallbackFunctor {
     public:
-        explicit Reply(std::uint64_t epoch) : epoch_(epoch) {}
+        Reply(std::uint64_t epoch, Target target) : epoch_(epoch), target_(std::move(target)) {}
         void SetObject(const RE::BSTSmartPointer<RE::BSScript::Object>&) override {}
         void operator()(RE::BSScript::Variable result) override {
             std::array<float, 15> data{};
@@ -175,8 +141,7 @@ namespace HPUI
             {
                 std::scoped_lock lock(stateMutex);
                 if (epoch_ != state.generation) { return; }
-                if (good) {
-                    state.snapshot = data; state.valid = true; state.error.clear();
+                if (good && StoreSnapshot(state, target_, data)) {
                     bool available = data[10] > .5f && data[11] > .5f && data[12] > .5f;
                     auto& history = state.histories[Identity(state.selected)];
                     if (available && !state.beginSession) { history.Observe(Values(data)); }
@@ -188,8 +153,8 @@ namespace HPUI
                         } else { state.error = L(12); }
                     }
                 }
-                else { state.error = L(13); }
-                state.busy = false;
+                else if (!good && target_.Same(state.selected)) { state.error = L(13); }
+                state.busy = false; state.writeBusy = false;
                 state.activeEdit.reset();
                 state.restoreActive.reset();
                 state.lastReply = Clock::now();
@@ -198,6 +163,7 @@ namespace HPUI
         }
     private:
         std::uint64_t epoch_;
+        Target target_;
     };
 
     class CatalogReply final : public RE::BSScript::IStackCallbackFunctor {
@@ -235,7 +201,7 @@ namespace HPUI
             {
                 std::scoped_lock lock(stateMutex);
                 if (epoch_ != state.generation) { return; }
-                state.busy = false; state.catalogBusy = false;
+                state.busy = false; state.writeBusy = false; state.catalogBusy = false;
                 state.lastCatalog = state.lastReply = Clock::now();
                 if (good) {
                     bool changed = state.targets.size() != targets.size() ||
@@ -253,6 +219,7 @@ namespace HPUI
                     else {
                         state.selected = state.targets.empty() ? Target{} : state.targets.front();
                         state.valid = false;
+                        DiscardTargetEdits(state);
                     }
                     state.error.clear(); state.refresh = true;
                 } else { state.error = L(17); }
@@ -266,7 +233,7 @@ namespace HPUI
     void QueueValue(int row, float value, const Target& expected, int group = -1) {
         if (row < 0 || row >= static_cast<int>(Rows) || !std::isfinite(value)) { return; }
         std::scoped_lock lock(stateMutex);
-        if (!state.valid || state.beginSession || state.restoreActive || state.restoreQueued || state.resetQueued || state.catalogBusy || !state.selected.Same(expected)) { return; }
+        if (!state.valid || state.beginSession || state.restoreActive || state.restoreQueued || state.resetQueued || !state.selected.Same(expected)) { return; }
         value = ClampEdit(value, row, expected.part);
         auto before = EffectiveValues(state);
         if (std::abs(before[row] - value) < 0.000001f) { return; }
@@ -320,6 +287,7 @@ namespace HPUI
             state.catalogBusy = catalog;
             state.refresh = false;
             state.busy = true;
+            state.writeBusy = restore.has_value() || reset || row >= 0;
             state.started = Clock::now();
             epoch = state.generation;
             target = state.selected;
@@ -333,7 +301,7 @@ namespace HPUI
             auto* vm = RE::BSScript::Internal::VirtualMachine::GetSingleton();
             RE::BSTSmartPointer<RE::BSScript::IStackCallbackFunctor> callback;
             if (catalog) { callback.reset(new CatalogReply(epoch)); }
-            else { callback.reset(new Reply(epoch)); }
+            else { callback.reset(new Reply(epoch, target)); }
             auto* args = catalog ? RE::MakeFunctionArguments() : restore ?
                 RE::MakeFunctionArguments(std::int32_t(target.part), std::int32_t(target.item), std::vector<float>(restore->desired.begin(), restore->desired.end())) : row >= 0 ?
                 RE::MakeFunctionArguments(std::int32_t(target.part), std::int32_t(target.item), std::int32_t(row), float(value)) :
@@ -344,7 +312,7 @@ namespace HPUI
                 // The VM owns arguments after dispatch; no raw callbacks or DLL offsets are used.
                 std::scoped_lock lock(stateMutex);
                 if (epoch != state.generation) { return; }
-                state.busy = false;
+                state.busy = false; state.writeBusy = false;
                 state.catalogBusy = false;
                 if (catalog) { state.lastCatalog = Clock::now(); }
                 state.activeEdit.reset();
@@ -407,7 +375,7 @@ namespace HPUI
         if (ImGui::Combo(L(31), &level, L(32))) { SavePrecision(level); }
         level = precision.load();
         ImGui::Text(L(33), PrecisionStep(0, level), PrecisionStep(3, level));
-        bool enabled = inGame.load() && !view.beginSession && !view.restoreQueued && !view.restoreActive && !view.resetQueued && !view.catalogBusy && !view.targets.empty() && view.valid && view.snapshot[10] > .5f &&
+        bool enabled = inGame.load() && !view.beginSession && !view.restoreQueued && !view.restoreActive && !view.resetQueued && !view.targets.empty() && view.valid && view.snapshot[10] > .5f &&
                        view.snapshot[11] > .5f && view.snapshot[12] > .5f && view.error.empty();
         ImGui::BeginDisabled(!enabled);
         const char* labels[] = {
@@ -463,7 +431,7 @@ namespace HPUI
             if (ImGui::Button(L(54))) {
                 {
                     std::scoped_lock lock(stateMutex);
-                    if (!state.catalogBusy && resetTarget.Same(state.selected)) {
+                    if (state.valid && resetTarget.Same(state.selected)) {
                         state.histories[Identity(state.selected)].Record(EffectiveValues(state), -1, Now());
                         state.queued.fill(std::nullopt); state.resetQueued = true;
                     }
@@ -488,7 +456,7 @@ namespace HPUI
         ImGui::EndDisabled();
         ImGui::Text(L(58), static_cast<unsigned>(undoCount));
         if (ImGui::Button(L(59))) { std::scoped_lock lock(stateMutex); state.refresh = true; }
-        ImGui::TextUnformatted(view.busy ? L(60) : L(61));
+        ImGui::TextUnformatted(pending ? L(60) : L(61));
         RenderHotkeySettings();
         if (ImGui::Button(L(62))) { open = false; }
         // This window disables automatic wheel scrolling. Manually scroll only
@@ -599,7 +567,7 @@ SKSEPluginLoad(const SKSE::LoadInterface* skse)
     spdlog::set_level(spdlog::level::info);
     spdlog::flush_on(spdlog::level::info);
     SKSE::Init(skse, false);
-    SKSE::log::info("HairPositionerUI 1.2.0: wheel, per-target undo, session restore, precision; default F3");
+    SKSE::log::info("HairPositionerUI 1.2.1: wheel, per-target undo, session restore, precision; default F3");
     HPUI::LoadHotkey();
     return SKSE::GetMessagingInterface()->RegisterListener(HPUI::Message);
 }

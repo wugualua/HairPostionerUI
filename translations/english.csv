@@ -19,7 +19,7 @@
 "ui.018","Invalid target list. Install the matching DLL and HPUIBridge.pex together."
 "ui.019","Waiting for Papyrus. Check the logs; reload the save if the request stays pending."
 "ui.020","Cannot call the bridge. Install the matching DLL and HPUIBridge.pex together."
-"ui.021","Parts Editor - 1.2.0###HairPositionerUI"
+"ui.021","Parts Editor - 1.2.1###HairPositionerUI"
 "ui.022","Player parts - HairPositioner 2.5"
 "ui.023","Target"
 "ui.024","No target / reading target list"

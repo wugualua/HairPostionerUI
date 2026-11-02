@@ -1,4 +1,4 @@
-# HairPositioner UI 1.2.0
+# HairPositioner UI 1.2.1
 
 A compact SKSE Menu Framework editor for HairPositioner 2.5. Adjust player hair, beard, supported extra head parts and equipped wigs/gear without opening RaceMenu.
 
@@ -8,6 +8,9 @@ A compact SKSE Menu Framework editor for HairPositioner 2.5. Adjust player hair,
 Install HairPositioner 2.5 and its requirements, RaceMenu/NiOverride, SKSE Menu Framework, and SKSE64/Address Library for your game runtime. Install this ZIP as a separate mod below HairPositioner in MO2. No ESP is included. Replace the previous UI version; keep the original HairPositioner enabled.
 
 Press F3 to toggle the editor, or use Mod Control Panel > HairPositioner > Parts Editor. Select a target. Drag a value or use the wheel over it; Ctrl+click allows direct input. Fine/Normal/Coarse control the step size. Undo and Restore session start apply to the selected target. Reset restores defaults. Hotkeys can be changed or disabled in the UI. Save the game to preserve adjustments. Undo history is session-only.
+
+## Background refresh
+Periodic current-value and target-list reads keep the controls available. `Applying values...` is shown only for pending edits, not read-only refreshes. Writes are still processed one at a time.
 
 ## Language
 Edit `SKSE/Plugins/HairPositionerUI.ini` and restart the game:
@@ -24,7 +27,7 @@ Translations are external UTF-8 CSV files in `SKSE/Plugins/HairPositionerUI/tran
 Game-provided item names are not translated. Korean and other non-Latin text still require the appropriate SKSE Menu Framework font configuration. This update does not change fonts or fix the previously reproduced SKSEMF 3.18 font-size CTD.
 
 ## Compatibility and validation
-Targets SE and AE; VR is disabled. Prior gameplay feedback is from 1.5.97. 1.6.1170 runtime verification remains outstanding. Version 1.2.0 is not yet tested in game. Compile and automated checks do not prove runtime compatibility.
+Targets SE and AE; VR is disabled. Prior gameplay feedback is from 1.5.97. 1.6.1170 runtime verification remains outstanding. Version 1.2.1 is not yet tested in game. Compile and automated checks do not prove runtime compatibility.
 
 The Papyrus bridge and editing behavior are unchanged from 1.0.0. Ship the DLL and included HPUIBridge.pex together.
 

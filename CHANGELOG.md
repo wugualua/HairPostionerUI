@@ -2,6 +2,14 @@
 
 This repository consolidates local development that predates its first Git commit. Older packages are preserved in the Development Archive release; the Git history is not a reconstruction of those development sessions.
 
+## 1.2.1 — Quiet background refresh
+
+- Do not show `Applying values...` or temporarily disable editor controls for periodic read-only refreshes.
+- Keep writes serialized and protect target selection, undo and restore while an edit is pending.
+- Ignore stale snapshots after switching targets; discard queued edits if their target disappears from the refreshed catalog.
+- Keep the CSV format, translation keys and Papyrus bridge unchanged.
+- Includes background-refresh and target-safety regression tests. Gameplay validation is pending.
+
 ## 1.2.0 — External translations
 
 - Load English/Korean UI text from UTF-8 CSV files, once at startup.

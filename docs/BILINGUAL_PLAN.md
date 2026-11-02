@@ -1,3 +1,3 @@
-# Version 1.2.0 status
+# Current status
 
-External UTF-8 CSV translations implemented. Skyrim-style language names; english default, korean included. Missing or invalid entries fall back to built-in English. DLL build, CSV tests and edit history tests passed. Game validation remains pending.
+1.2.1 preserves the CSV translation system introduced in 1.2.0 and fixes background-refresh flicker. DLL build and automated tests passed; game validation is pending. See CHANGELOG.md and VALIDATION-1.2.1.json.

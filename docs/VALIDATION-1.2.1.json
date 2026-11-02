@@ -1,0 +1,13 @@
+{
+  "version": "1.2.1",
+  "dll_sha256": "024e84786a361eb82e8dbc129049c10d3228218c07ff4ecf86dfe6b4dd8abaa5",
+  "bridge_unchanged": true,
+  "tests": [
+    "background refresh/queued edits",
+    "stale snapshots/target removal",
+    "CSV translations",
+    "undo/restore/precision"
+  ],
+  "result": "passed",
+  "in_game_tested": false
+}

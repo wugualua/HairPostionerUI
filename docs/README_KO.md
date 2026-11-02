@@ -1,4 +1,10 @@
-﻿# 1.2.0 CSV 번역 지원
+﻿# 1.2.1 조회 시 깜빡임 수정
+
+백그라운드 조회 중에는 값 적용 문구나 일시적인 조절칸 비활성화를 표시하지 않습니다.
+실제 변경은 하나씩 처리하며, 대상 전환 뒤 이전 조회 결과가 새 대상 칸을 덮어쓰지 않도록 보호합니다.
+기존 CSV 번역 키·형식·브리지는 유지됩니다. 실제 게임에서의 표시 확인은 아직 필요합니다.
+
+# 1.2.0 CSV 번역 지원
 
 번역 파일: `SKSE/Plugins/HairPositionerUI/translations/english.csv`, `korean.csv`.
 언어 이름은 Skyrim 스타일의 전체 이름을 사용합니다. `Language=english`가 기본값이며 한국어는 `Language=korean`입니다.

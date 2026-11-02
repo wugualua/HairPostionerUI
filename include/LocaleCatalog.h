@@ -25,7 +25,7 @@ inline constexpr std::array<Entry, 68> entries{{
     {"ui.018", std::string_view{"Invalid target list. Install the matching DLL and HPUIBridge.pex together.", sizeof("Invalid target list. Install the matching DLL and HPUIBridge.pex together.") - 1}},
     {"ui.019", std::string_view{"Waiting for Papyrus. Check the logs; reload the save if the request stays pending.", sizeof("Waiting for Papyrus. Check the logs; reload the save if the request stays pending.") - 1}},
     {"ui.020", std::string_view{"Cannot call the bridge. Install the matching DLL and HPUIBridge.pex together.", sizeof("Cannot call the bridge. Install the matching DLL and HPUIBridge.pex together.") - 1}},
-    {"ui.021", std::string_view{"Parts Editor - 1.2.0###HairPositionerUI", sizeof("Parts Editor - 1.2.0###HairPositionerUI") - 1}},
+    {"ui.021", std::string_view{"Parts Editor - 1.2.1###HairPositionerUI", sizeof("Parts Editor - 1.2.1###HairPositionerUI") - 1}},
     {"ui.022", std::string_view{"Player parts - HairPositioner 2.5", sizeof("Player parts - HairPositioner 2.5") - 1}},
     {"ui.023", std::string_view{"Target", sizeof("Target") - 1}},
     {"ui.024", std::string_view{"No target / reading target list", sizeof("No target / reading target list") - 1}},

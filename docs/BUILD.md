@@ -15,8 +15,10 @@ xmake f -m releasedbg -a x64 --vs=2026 -y
 xmake build -j6 HairPositionerUI
 xmake build LanguageTests
 xmake build EditorHistoryTests
+xmake build RefreshTests
 build\tests\LanguageTests.exe translations
 build\tests\EditorHistoryTests.exe
+build\tests\RefreshTests.exe
 python tools/package.py
 ```
 
