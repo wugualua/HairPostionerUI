@@ -17,6 +17,7 @@ English is the default. Set [General] Language=korean in HairPositionerUI.ini fo
 1.2.0 is a test release: automated checks passed; gameplay validation is pending. SE/AE build targeting does not establish 1.6.1170 runtime compatibility. VR is not supported.
 
 Credits
+AI development assistance: OpenAI Codex (implementation, localization, debugging assistance, automated tests, and release documentation). Project direction and in-game testing: the maintainer. No OpenAI endorsement is implied.
 HairPositioner: Iwillbewarlock — https://github.com/Iwillbewarlock/HairPositioner
 SKSE Menu Framework/API: QTR-Modding — https://github.com/QTR-Modding/SKSE-Menu-Framework-3-API
 CommonLibSSE-NG: alandtse and contributors — https://github.com/alandtse/CommonLibVR

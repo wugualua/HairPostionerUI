@@ -29,6 +29,9 @@ Targets SE and AE; VR is disabled. Prior gameplay feedback is from 1.5.97. 1.6.1
 The Papyrus bridge and editing behavior are unchanged from 1.0.0. Ship the DLL and included HPUIBridge.pex together.
 
 ## Credits and license
+
+AI development assistance: **OpenAI Codex** — implementation, English/Korean localization, debugging assistance, automated tests, and release documentation. Project direction and in-game testing are provided by the maintainer. This credit does not imply OpenAI endorsement.
+
 HairPositioner: [Iwillbewarlock](https://github.com/Iwillbewarlock/HairPositioner).
 
 SKSE Menu Framework/API: [QTR-Modding](https://github.com/QTR-Modding/SKSE-Menu-Framework-3-API).
