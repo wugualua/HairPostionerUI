@@ -1,0 +1,8 @@
+{
+  "version": "1.2.2",
+  "dll_sha256": "299805f3e52ff6e8bbb64918bbdc74370a4deff005e00ae48d8081853fbc907e",
+  "tests": "CSV, refresh and history tests passed",
+  "changes": "UI wording only; numeric steps and INI values unchanged",
+  "gameplay_baseline": "1.2.1 confirmed working by maintainer",
+  "in_game_tested_this_build": false
+}

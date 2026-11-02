@@ -6,7 +6,7 @@ Controls
 F3: open/close the editor (rebindable).
 Drag or mouse wheel over a value: adjust it.
 Ctrl+click: type an exact value.
-Fine/Normal/Coarse: choose adjustment precision.
+Step size - Small/Medium/Large: choose wheel increments and drag speed.
 Undo / Restore session start / Reset: revert changes for the selected target.
 You can also open the editor through Mod Control Panel > HairPositioner.
 
@@ -14,7 +14,7 @@ Install below the original HairPositioner in MO2. Keep the original enabled. The
 
 English is the default. Set [General] Language=korean in HairPositionerUI.ini for Korean, then restart the game. UTF-8 CSV files allow other languages to be added without rebuilding the DLL. Non-Latin text requires a suitable SKSE Menu Framework font configuration; this mod does not install fonts.
 
-1.2.1 is a test release: automated checks passed; gameplay validation is pending. SE/AE build targeting does not establish 1.6.1170 runtime compatibility. VR is not supported.
+1.2.2 is the first official GitHub release. The maintainer confirmed the preceding 1.2.1 working in game; this update changes wording only. SE/AE build targeting does not establish 1.6.1170 runtime compatibility. VR is not supported.
 
 Credits
 AI development assistance: OpenAI Codex (implementation, localization, debugging assistance, automated tests, and release documentation). Project direction and in-game testing: the maintainer. No OpenAI endorsement is implied.

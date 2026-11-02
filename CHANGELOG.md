@@ -2,6 +2,13 @@
 
 This repository consolidates local development that predates its first Git commit. Older packages are preserved in the Development Archive release; the Git history is not a reconstruction of those development sessions.
 
+## 1.2.2 — First official GitHub release
+
+- Rename the adjustment selector to Step size: Small / Medium / Large.
+- Korean labels: 조절 단위: 작게 / 보통 / 크게.
+- Preserve CSV keys, INI Precision values, numeric steps and editing behavior.
+- First non-prerelease publication, following maintainer confirmation of 1.2.1 in game. Earlier GitHub releases remain available as test/development history.
+
 ## 1.2.1 — Quiet background refresh
 
 - Do not show `Applying values...` or temporarily disable editor controls for periodic read-only refreshes.

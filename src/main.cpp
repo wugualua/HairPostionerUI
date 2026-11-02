@@ -567,7 +567,7 @@ SKSEPluginLoad(const SKSE::LoadInterface* skse)
     spdlog::set_level(spdlog::level::info);
     spdlog::flush_on(spdlog::level::info);
     SKSE::Init(skse, false);
-    SKSE::log::info("HairPositionerUI 1.2.1: wheel, per-target undo, session restore, precision; default F3");
+    SKSE::log::info("HairPositionerUI 1.2.2: wheel, per-target undo, session restore, precision; default F3");
     HPUI::LoadHotkey();
     return SKSE::GetMessagingInterface()->RegisterListener(HPUI::Message);
 }

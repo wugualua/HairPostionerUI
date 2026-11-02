@@ -1,4 +1,4 @@
-HairPositioner UI 1.2.1: GPL-3.0-or-later.
+HairPositioner UI 1.2.2: GPL-3.0-or-later.
 Corresponding project source is provided alongside this package.
 
 CommonLibSSE-NG (alandtse/CommonLibVR, branch ng): GPL-3.0-or-later
