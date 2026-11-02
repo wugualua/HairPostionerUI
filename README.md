@@ -2,7 +2,7 @@
 
 A compact SKSE Menu Framework editor for HairPositioner 2.5. Adjust player hair, beard, supported extra head parts and equipped wigs/gear without opening RaceMenu.
 
-[Downloads](https://github.com/gamingforfun625-alt/HairPostionerUI/releases) · [한국어 안내](docs/README_KO.md) · [Changelog](CHANGELOG.md) · [Build instructions](docs/BUILD.md) · [Translation guide](TRANSLATING.md)
+[Downloads](https://github.com/wugualua/HairPostionerUI/releases) · [한국어 안내](docs/README_KO.md) · [Changelog](CHANGELOG.md) · [Build instructions](docs/BUILD.md) · [Translation guide](TRANSLATING.md)
 
 ## Install and use
 Install HairPositioner 2.5 and its requirements, RaceMenu/NiOverride, SKSE Menu Framework, and SKSE64/Address Library for your game runtime. Install this ZIP as a separate mod below HairPositioner in MO2. No ESP is included. Replace the previous UI version; keep the original HairPositioner enabled.

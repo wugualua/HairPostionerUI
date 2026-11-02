@@ -9,7 +9,7 @@
 - Python 3 for the packaging script only.
 
 ```text
-git clone --recurse-submodules https://github.com/gamingforfun625-alt/HairPostionerUI.git
+git clone --recurse-submodules https://github.com/wugualua/HairPostionerUI.git
 cd HairPostionerUI
 xmake f -m releasedbg -a x64 --vs=2026 -y
 xmake build -j6 HairPositionerUI

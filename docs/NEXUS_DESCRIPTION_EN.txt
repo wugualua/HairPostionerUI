@@ -23,5 +23,5 @@ SKSE Menu Framework/API: QTR-Modding — https://github.com/QTR-Modding/SKSE-Men
 CommonLibSSE-NG: alandtse and contributors — https://github.com/alandtse/CommonLibVR
 SKSE and RaceMenu/NiOverride: required separately.
 
-Source and license: https://github.com/gamingforfun625-alt/HairPostionerUI
+Source and license: https://github.com/wugualua/HairPostionerUI
 GPL-3.0-or-later; third-party notices included.
